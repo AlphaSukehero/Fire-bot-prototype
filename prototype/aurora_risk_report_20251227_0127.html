@@ -1,0 +1,429 @@
+import React, { useState, useEffect } from 'react';
+import { 
+  Flame, 
+  Bot, 
+  Cpu, 
+  Wifi, 
+  ShieldAlert, 
+  Activity, 
+  Target, 
+  CheckCircle2, 
+  AlertTriangle,
+  Radio,
+  Battery,
+  ChevronRight,
+  Server
+} from 'lucide-react';
+
+// --- Components ---
+
+const Navbar = () => (
+  <nav className="sticky top-0 z-50 bg-slate-900/90 backdrop-blur-md border-b border-slate-800">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="flex items-center justify-between h-16">
+        <div className="flex items-center gap-2">
+          <Flame className="w-6 h-6 text-orange-500" />
+          <span className="font-bold text-xl text-white tracking-tight">FireBot<span className="text-orange-500">Sync</span></span>
+        </div>
+        <div className="hidden md:block">
+          <div className="ml-10 flex items-baseline space-x-8">
+            <a href="#about" className="text-slate-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">About</a>
+            <a href="#dashboard" className="text-slate-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Live Dashboard</a>
+            <a href="#system" className="text-slate-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">System Architecture</a>
+            <a href="#specs" className="text-slate-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Specifications</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+);
+
+const Hero = () => (
+  <div className="relative overflow-hidden bg-slate-950 pt-20 pb-32">
+    <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10"></div>
+    <div className="absolute top-0 right-0 -mt-20 -mr-20 w-80 h-80 bg-orange-600 rounded-full blur-[120px] opacity-20"></div>
+    <div className="absolute bottom-0 left-0 -mb-20 -ml-20 w-80 h-80 bg-blue-600 rounded-full blur-[120px] opacity-20"></div>
+    
+    <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-800/50 border border-slate-700 mb-8">
+        <span className="flex h-2 w-2 rounded-full bg-orange-500 animate-pulse"></span>
+        <span className="text-xs font-semibold text-slate-300 tracking-wider uppercase">Intelligent Safety Systems</span>
+      </div>
+      <h1 className="text-4xl md:text-6xl font-extrabold text-white tracking-tight mb-6">
+        Fire Detection and <br className="hidden md:block" />
+        <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-red-600">
+          Cooperative Robotic Response
+        </span>
+      </h1>
+      <p className="mt-4 max-w-3xl mx-auto text-lg md:text-xl text-slate-400">
+        A smart, modular platform combining embedded sensors, web-based analytics, and inter-robot communication to revolutionize indoor fire safety and emergency response.
+      </p>
+      <div className="mt-10 flex justify-center gap-4">
+        <a href="#dashboard" className="px-8 py-3 rounded-lg bg-orange-600 text-white font-medium hover:bg-orange-700 transition-colors shadow-lg shadow-orange-600/20 flex items-center gap-2">
+          View Live Dashboard <ChevronRight className="w-4 h-4" />
+        </a>
+        <a href="#about" className="px-8 py-3 rounded-lg bg-slate-800 text-white font-medium hover:bg-slate-700 transition-colors border border-slate-700">
+          Learn More
+        </a>
+      </div>
+    </div>
+  </div>
+);
+
+const SectionHeading = ({ title, subtitle }) => (
+  <div className="mb-12">
+    <h2 className="text-3xl font-bold text-white mb-2">{title}</h2>
+    {subtitle && <p className="text-slate-400 text-lg max-w-2xl">{subtitle}</p>}
+    <div className="h-1 w-20 bg-orange-500 mt-4 rounded-full"></div>
+  </div>
+);
+
+const About = () => (
+  <section id="about" className="py-20 bg-slate-900">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+        <div>
+          <SectionHeading 
+            title="The Problem & The Need" 
+            subtitle="Why traditional systems are no longer enough." 
+          />
+          <div className="space-y-6 text-slate-300">
+            <div className="bg-slate-800/50 p-6 rounded-2xl border border-slate-700">
+              <h3 className="text-xl font-semibold text-white mb-3 flex items-center gap-2">
+                <ShieldAlert className="w-5 h-5 text-red-400" /> Traditional Limitations
+              </h3>
+              <p className="leading-relaxed">
+                Traditional fire detection systems only provide basic alerts and lack the ability to analyze fire conditions or take active response measures. There is an urgent need for a smarter system that not only detects fire but also evaluates its severity and enables a coordinated robotic response.
+              </p>
+            </div>
+            <div className="bg-slate-800/50 p-6 rounded-2xl border border-slate-700">
+              <h3 className="text-xl font-semibold text-white mb-3 flex items-center gap-2">
+                <Target className="w-5 h-5 text-blue-400" /> The Modern Solution
+              </h3>
+              <p className="leading-relaxed">
+                With increasing demand for smart safety solutions, modern systems must go beyond detection. This project demonstrates how robotics, embedded systems, and web technologies can be integrated to create a system that is informative, responsive, and cost-effective.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <SectionHeading 
+            title="Project Objectives" 
+            subtitle="What we aim to achieve with this system." 
+          />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {[
+              { icon: Flame, text: "Design a sensor-based fire detection robot" },
+              { icon: Activity, text: "Analyze fire intensity and spread behavior" },
+              { icon: Server, text: "Develop a web-based monitoring dashboard" },
+              { icon: Radio, text: "Implement inter-robot communication" },
+              { icon: Bot, text: "Enable secondary robot cooperative response" },
+              { icon: CheckCircle2, text: "Build a cost-effective & scalable system" },
+            ].map((obj, i) => (
+              <div key={i} className="flex items-start gap-3 p-4 bg-slate-800/30 rounded-xl border border-slate-700/50 hover:bg-slate-800/80 transition-colors">
+                <div className="mt-1 bg-slate-900 p-2 rounded-lg border border-slate-700 text-orange-400">
+                  <obj.icon className="w-5 h-5" />
+                </div>
+                <span className="text-slate-300 font-medium">{obj.text}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+);
+
+const DashboardDemo = () => {
+  const [simulationState, setSimulationState] = useState('idle'); // idle, detecting, critical, responding, resolved
+  const [intensity, setIntensity] = useState(0);
+
+  useEffect(() => {
+    let interval;
+    if (simulationState === 'detecting' && intensity < 45) {
+      interval = setInterval(() => setIntensity(prev => prev + 5), 500);
+    } else if (simulationState === 'detecting' && intensity >= 45) {
+      setSimulationState('critical');
+    } else if (simulationState === 'critical' && intensity < 85) {
+      interval = setInterval(() => setIntensity(prev => prev + 2), 200);
+    } else if (simulationState === 'responding' && intensity > 0) {
+      interval = setInterval(() => setIntensity(prev => Math.max(0, prev - 5)), 300);
+    } else if (simulationState === 'responding' && intensity === 0) {
+      setSimulationState('resolved');
+    }
+    return () => clearInterval(interval);
+  }, [simulationState, intensity]);
+
+  const startSimulation = () => {
+    setIntensity(10);
+    setSimulationState('detecting');
+  };
+
+  const resetSimulation = () => {
+    setIntensity(0);
+    setSimulationState('idle');
+  };
+
+  const getIntensityColor = () => {
+    if (intensity < 30) return 'text-green-500';
+    if (intensity < 60) return 'text-yellow-500';
+    return 'text-red-500';
+  };
+
+  const getStatusBg = () => {
+    if (simulationState === 'critical') return 'bg-red-500/10 border-red-500/50';
+    if (simulationState === 'detecting') return 'bg-yellow-500/10 border-yellow-500/50';
+    if (simulationState === 'responding') return 'bg-blue-500/10 border-blue-500/50';
+    if (simulationState === 'resolved') return 'bg-green-500/10 border-green-500/50';
+    return 'bg-slate-800 border-slate-700';
+  };
+
+  return (
+    <section id="dashboard" className="py-20 bg-slate-950">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <SectionHeading 
+          title="Web-Based Monitoring Platform" 
+          subtitle="Interactive simulation of the custom web application that analyzes fire severity and coordinates robots." 
+        />
+        
+        <div className={`mt-8 rounded-2xl border transition-colors duration-500 overflow-hidden ${getStatusBg()}`}>
+          {/* Dashboard Header */}
+          <div className="bg-slate-900 border-b border-slate-800 p-4 flex justify-between items-center">
+            <div className="flex items-center gap-3">
+              <Activity className={`w-6 h-6 ${simulationState === 'critical' ? 'text-red-500 animate-pulse' : 'text-blue-500'}`} />
+              <h3 className="text-lg font-bold text-white tracking-wide">Command Center Dashboard</h3>
+            </div>
+            <div className="flex gap-2">
+              <button 
+                onClick={simulationState === 'idle' || simulationState === 'resolved' ? startSimulation : () => setSimulationState('responding')}
+                disabled={simulationState === 'responding'}
+                className="px-4 py-2 text-sm font-medium rounded-lg bg-orange-600 text-white hover:bg-orange-700 disabled:opacity-50 transition-colors"
+              >
+                {simulationState === 'idle' || simulationState === 'resolved' ? 'Simulate Fire Event' : 
+                 simulationState === 'critical' ? 'Deploy Extinguisher Robot' : 'Processing...'}
+              </button>
+              {(simulationState !== 'idle') && (
+                <button onClick={resetSimulation} className="px-4 py-2 text-sm font-medium rounded-lg bg-slate-700 text-white hover:bg-slate-600 transition-colors">
+                  Reset
+                </button>
+              )}
+            </div>
+          </div>
+
+          {/* Dashboard Grid */}
+          <div className="p-6 grid grid-cols-1 md:grid-cols-3 gap-6 bg-slate-900/50">
+            {/* Primary Robot Panel */}
+            <div className="bg-slate-800 rounded-xl p-5 border border-slate-700">
+              <div className="flex justify-between items-start mb-4">
+                <div className="flex items-center gap-2">
+                  <Bot className="w-5 h-5 text-blue-400" />
+                  <span className="font-semibold text-white">Primary Robot (Scout)</span>
+                </div>
+                <span className="flex h-3 w-3 rounded-full bg-green-500"></span>
+              </div>
+              <div className="space-y-3">
+                <div className="flex justify-between text-sm">
+                  <span className="text-slate-400">Status:</span>
+                  <span className="text-white font-medium">
+                    {simulationState === 'idle' ? 'Patrolling Sector A' : 
+                     simulationState === 'detecting' ? 'Analyzing Anomaly' :
+                     simulationState === 'critical' ? 'Transmitting Alert' : 'Monitoring Area'}
+                  </span>
+                </div>
+                <div className="flex justify-between text-sm">
+                  <span className="text-slate-400">Sensor Reading:</span>
+                  <span className="text-white font-mono">IR_{intensity > 0 ? (intensity * 12.5).toFixed(0) : '021'}</span>
+                </div>
+                <div className="flex justify-between text-sm">
+                  <span className="text-slate-400">Battery:</span>
+                  <span className="text-green-400 flex items-center gap-1"><Battery className="w-4 h-4"/> 87%</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Analytics Panel */}
+            <div className="bg-slate-800 rounded-xl p-5 border border-slate-700 flex flex-col justify-center items-center text-center relative overflow-hidden">
+              {simulationState === 'critical' && <div className="absolute inset-0 bg-red-500/10 animate-pulse"></div>}
+              <h4 className="text-slate-400 text-sm font-medium mb-2 uppercase tracking-wider relative z-10">Analyzed Fire Intensity</h4>
+              <div className={`text-5xl font-bold mb-2 relative z-10 font-mono ${getIntensityColor()}`}>
+                {intensity}%
+              </div>
+              <div className="w-full bg-slate-700 rounded-full h-2.5 mt-2 relative z-10">
+                <div className={`h-2.5 rounded-full transition-all duration-300 ${intensity > 60 ? 'bg-red-500' : intensity > 30 ? 'bg-yellow-500' : 'bg-blue-500'}`} style={{ width: `${intensity}%` }}></div>
+              </div>
+              <p className="mt-3 text-sm text-slate-300 font-medium relative z-10">
+                {intensity < 20 ? 'Environment Normal' : 
+                 intensity < 60 ? 'Warning: Heat Signature Detected' : 
+                 'CRITICAL: Fire Spread Imminent'}
+              </p>
+            </div>
+
+            {/* Secondary Robot Panel */}
+            <div className="bg-slate-800 rounded-xl p-5 border border-slate-700">
+              <div className="flex justify-between items-start mb-4">
+                <div className="flex items-center gap-2">
+                  <Bot className="w-5 h-5 text-orange-400" />
+                  <span className="font-semibold text-white">Secondary Robot (Responder)</span>
+                </div>
+                <span className={`flex h-3 w-3 rounded-full ${simulationState === 'responding' ? 'bg-blue-500 animate-pulse' : 'bg-slate-500'}`}></span>
+              </div>
+              <div className="space-y-3">
+                <div className="flex justify-between text-sm">
+                  <span className="text-slate-400">Status:</span>
+                  <span className={`font-medium ${simulationState === 'responding' ? 'text-blue-400' : 'text-slate-300'}`}>
+                    {simulationState === 'idle' || simulationState === 'detecting' ? 'Standby Base Station' : 
+                     simulationState === 'critical' ? 'Awaiting Dispatch Command' :
+                     simulationState === 'responding' ? 'Navigating to Sector A...' : 'Returning to Base'}
+                  </span>
+                </div>
+                <div className="flex justify-between text-sm">
+                  <span className="text-slate-400">Comm Link:</span>
+                  <span className={simulationState === 'critical' ? 'text-yellow-400 animate-pulse' : 'text-green-400'}>
+                    {simulationState === 'critical' ? 'Receiving Support Signal' : 'Connected'}
+                  </span>
+                </div>
+                <div className="flex justify-between text-sm">
+                  <span className="text-slate-400">Action:</span>
+                  <span className="text-white">
+                     {simulationState === 'responding' ? 'Executing Navigation Logic' : 'None'}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          {/* System Logs */}
+          <div className="bg-slate-900 p-4 border-t border-slate-800 text-xs font-mono text-slate-400 h-32 overflow-y-auto flex flex-col-reverse">
+            {simulationState === 'resolved' && <div><span className="text-green-400">[SYS]</span> Fire extinguished. Environment secured.</div>}
+            {simulationState === 'responding' && <div><span className="text-blue-400">[SYS]</span> Secondary robot dispatched. Support protocol engaged.</div>}
+            {simulationState === 'critical' && <div><span className="text-red-400">[ALERT]</span> Intensity threshold exceeded! Support signal generated.</div>}
+            {(simulationState === 'detecting' || simulationState === 'critical') && <div><span className="text-yellow-400">[WARN]</span> Abnormal sensor patterns detected by Primary Robot. Processing data...</div>}
+            {simulationState !== 'idle' && <div><span className="text-blue-400">[SYS]</span> System initialized. Monitoring active.</div>}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const SystemDetails = () => (
+  <section id="system" className="py-20 bg-slate-900">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      {/* Working Principle */}
+      <div className="mb-20">
+        <SectionHeading 
+          title="Working Principle" 
+          subtitle="How the sensing, analysis, and robotic coordination seamlessly integrate." 
+        />
+        <div className="relative">
+          <div className="absolute top-1/2 left-0 w-full h-1 bg-slate-800 -translate-y-1/2 hidden lg:block z-0"></div>
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 relative z-10">
+            {[
+              { step: '01', title: 'Detection', desc: 'Flame sensor detects infrared radiation. Microcontroller applies threshold & time-dependent logic.', icon: Flame },
+              { step: '02', title: 'Transmission', desc: 'Primary robot transmits processed data to the web application via wireless module.', icon: Wifi },
+              { step: '03', title: 'Analysis', desc: 'Web platform analyzes fire intensity, estimates spread behavior, and determines severity.', icon: Activity },
+              { step: '04', title: 'Response', desc: 'If critical, a trigger signal is sent. Secondary robot executes logic to navigate and assist.', icon: Bot }
+            ].map((item, i) => (
+              <div key={i} className="bg-slate-800 p-6 rounded-2xl border border-slate-700 relative group hover:-translate-y-2 transition-transform duration-300 shadow-xl">
+                <div className="absolute -top-4 -left-4 w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center font-bold text-white shadow-lg">
+                  {item.step}
+                </div>
+                <item.icon className="w-10 h-10 text-orange-400 mb-4" />
+                <h3 className="text-xl font-bold text-white mb-2">{item.title}</h3>
+                <p className="text-slate-400 text-sm leading-relaxed">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div id="specs" className="grid grid-cols-1 md:grid-cols-2 gap-12">
+        {/* Components */}
+        <div>
+          <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+            <Cpu className="text-blue-500" /> Hardware Components
+          </h3>
+          <div className="grid grid-cols-2 gap-4">
+            {['Microcontroller (ESP8266/ESP32)', 'Flame Sensor Module', 'Motor Driver (L298N)', 'Chassis with DC Motors', 'Wireless Comm Module', 'Power Supply Unit'].map((comp, i) => (
+              <div key={i} className="bg-slate-800/50 border border-slate-700 p-4 rounded-xl flex items-center gap-3">
+                <div className="w-2 h-2 rounded-full bg-blue-500"></div>
+                <span className="text-slate-300 text-sm font-medium">{comp}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Advantages & Apps */}
+        <div className="space-y-8">
+          <div>
+            <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+              <CheckCircle2 className="text-green-500" /> System Advantages
+            </h3>
+            <ul className="space-y-3">
+              {[
+                'Real-time fire detection and comprehensive analysis',
+                'Provides detailed insights instead of simple boolean alerts',
+                'Supports cooperative multi-robot operation',
+                'Cost-effective and scalable modular design',
+                'Highly suitable for indoor safety applications'
+              ].map((adv, i) => (
+                <li key={i} className="flex items-start gap-3 text-slate-300">
+                  <ChevronRight className="w-5 h-5 text-green-500 shrink-0" />
+                  <span>{adv}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+              <Target className="text-purple-500" /> Key Applications
+            </h3>
+            <div className="flex flex-wrap gap-2">
+              {['Smart Buildings', 'Industrial Hazard Monitoring', 'Disaster Training', 'Educational Robotics', 'Research'].map((app, i) => (
+                <span key={i} className="px-3 py-1 bg-purple-500/10 text-purple-400 border border-purple-500/20 rounded-full text-sm font-medium">
+                  {app}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+);
+
+const Footer = () => (
+  <footer className="bg-slate-950 py-12 border-t border-slate-900 text-center">
+    <div className="max-w-3xl mx-auto px-4">
+      <div className="flex items-center justify-center gap-2 mb-6">
+        <Flame className="w-6 h-6 text-orange-500" />
+        <span className="font-bold text-xl text-white tracking-tight">FireBot<span className="text-orange-500">Sync</span></span>
+      </div>
+      <p className="text-slate-400 text-sm mb-6">
+        This project demonstrates an intelligent fire detection and response system that integrates sensing,
+        analysis, and robotic coordination. It enhances safety, improves response time, and provides a
+        strong foundation for future smart safety systems.
+      </p>
+      <div className="text-slate-600 text-xs">
+        &copy; {new Date().getFullYear()} Fire Detection and Cooperative Robotic Response System Project. All rights reserved.
+      </div>
+    </div>
+  </footer>
+);
+
+export default function App() {
+  return (
+    <div className="min-h-screen bg-slate-900 font-sans selection:bg-orange-500/30">
+      <Navbar />
+      <Hero />
+      <About />
+      <DashboardDemo />
+      <SystemDetails />
+      <Footer />
+    </div>
+  );
+}

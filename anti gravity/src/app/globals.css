@@ -1,0 +1,67 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ui-900: #09090b;
+  --color-ui-800: #18181b;
+  --color-ui-700: #27272a;
+  --color-ui-text: #e4e4e7;
+  --color-ui-muted: #a1a1aa;
+  --color-ui-accent: #06b6d4;
+  --color-ui-critical: #ef4444;
+  --color-ui-warning: #f59e0b;
+  --color-ui-success: #10b981;
+
+  --animate-radar-spin: radar 4s linear infinite;
+  --animate-pulse-fast: pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-ping-slow: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+
+  @keyframes radar {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+}
+
+:root {
+  --background: #09090b;
+  --foreground: #e4e4e7;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  overflow-x: hidden;
+}
+
+/* Tactical Backgrounds & Utilities */
+.tactical-grid {
+  background-image: 
+    linear-gradient(to right, #18181b 1px, transparent 1px),
+    linear-gradient(to bottom, #18181b 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.glass-panel {
+  background: rgba(24, 24, 27, 0.7);
+  backdrop-filter: blur(10px);
+}
+
+.neon-border {
+  box-shadow: 0 0 10px rgba(6, 182, 212, 0.1), inset 0 0 10px rgba(6, 182, 212, 0.05);
+  border: 1px solid rgba(6, 182, 212, 0.2);
+}
+
+.neon-border-critical {
+  box-shadow: 0 0 15px rgba(239, 68, 68, 0.2), inset 0 0 15px rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  animation: alertBg 2s infinite alternate;
+}
+
+@keyframes alertBg {
+  0% { background-color: rgba(239, 68, 68, 0.05); }
+  100% { background-color: rgba(239, 68, 68, 0.15); }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: rgba(24, 24, 27, 0.5); }
+::-webkit-scrollbar-thumb { background: #3f3f46; border-radius: 4px; }

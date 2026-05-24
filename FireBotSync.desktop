@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=FireBotSync
+Comment=Fire Detection Command Center
+Exec="/home/alpha/Desktop/My website/Fire bot prototype/anti gravity/start_firebot.sh"
+Icon=/home/alpha/.gemini/antigravity/brain/c20c1aa5-3632-4341-b97b-975c18af01bf/firebot_icon.png
+Terminal=false
+StartupNotify=false
+Categories=Utility;
